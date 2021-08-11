@@ -7,10 +7,30 @@ covidService.addData = (payload) => {
     return response;
 }
 
-covidService.getAllData = () => {
-    let response = covidModel.find({}).limit(50);
-    console.log(response, "response");
+covidService.getDataByState = (payload) => {
+    let response = covidModel.findOne({ state: payload });
     return response;
 }
 
+covidService.getAllData = (limit) => {
+    let response = covidModel.find({}).limit(limit);
+    return response;
+}
+
+covidService.updateData = (payload) => {
+    let response = covidModel.findOneAndUpdate({ state: payload.state }, {
+        cases: payload.cases,
+        deaths: payload.deaths,
+        date: payload.date
+    }, {
+        new: true,
+        lean: true
+    });
+    return response;
+}
+
+covidService.deleteData = () => {
+    let response = "";
+    return response;
+}
 module.exports = covidService;
